@@ -1,8 +1,6 @@
-//
-// Created by sadzio on 04.03.2018.
-//
-
+#include<iostream>
+#include<string>
 #ifndef JIMP_EXERCISES_REVERSESTRING_H
 #define JIMP_EXERCISES_REVERSESTRING_H
-
+std::string reverse(std::string str);
 #endif JIMP_EXERCISES_REVERSESTRING_H
