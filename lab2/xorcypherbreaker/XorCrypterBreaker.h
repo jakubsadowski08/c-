@@ -1,0 +1,14 @@
+//
+// Created by sado on 15.03.18.
+//
+
+#ifndef JIMP_EXERCISES_XORCRYPTERBREAKER_H
+#define JIMP_EXERCISES_XORCRYPTERBREAKER_H
+
+
+class XorCrypterBreaker {
+
+};
+
+
+#endif //JIMP_EXERCISES_XORCRYPTERBREAKER_H
