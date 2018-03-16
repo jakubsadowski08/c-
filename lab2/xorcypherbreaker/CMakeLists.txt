@@ -1,8 +1,8 @@
 
 project(xorcrypterbreaker)
 
-set(HEDEAR_FILES XorCrypterBreaker.h)
-set(SOURCE_FILES XorCrypterBreaker.cpp)
+set(HEDEAR_FILES XorCypherBreaker.h)
+set(SOURCE_FILES XorCypherBreaker.cpp)
 
 add_library(libxorcrypterbreaker STATIC ${SOURCE_FILES})
 target_include_directories(libxorcrypterbreaker PUBLIC .)
