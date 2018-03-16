@@ -3,71 +3,9 @@
 using std::find;
 using std::vector;
 using std::string;
-int IsInDic(std::vector<std::string>dictionary,vector<char> a)
-{
-    int count = 0;
-    for (auto const &value : dictionary) {
-        if(value.length() < 3)
-        {
-            continue;
-        }
-        else
-        {
-            if((a[0] == value[0]) && (a[1] == value[1]) && (a[2] == value[2]))
-            {
-                count++;
-            }
-        }
-    }
-    return count;
-}
-
-string XorCypherBreaker(const vector<char> &cryptogram,int key_length, const vector<string> &dictionary)
-{
-    int x,sum,a = 0;
-    char key[4];
-    char key_2[3];
-    std::map<int,string>suspected;
-    vector<char>pos;
-    pos.emplace_back('a');
-    pos.emplace_back('a');
-    pos.emplace_back('a');
-            for (int i = 97; i < 123; i++) {
-                for (int j = 97; j < 123; j++) {
-                    for (int k = 97; k < 123; k++) {
-                        for(int l = 0; l < cryptogram.size() / 3; l = l+3)
-                        {
-                            pos[0] = (char)i ^ cryptogram[l];
-                            pos[1] = (char)j ^ cryptogram[l+1];
-                            pos[2] = (char)k ^ cryptogram[l+2];
-                            x = IsInDic(dictionary,pos);
-                            if(x != 0)
-                            {
-                                sum = sum + x;
-                                x = 0;
-                            }
-                        }
-                        key[0] = (char)i;
-                        key[1] = (char)j;
-                        key[2] = (char)k;
-                        suspected[sum] = (string)key;
-                        sum = 0;
-            }
-        }
-    }
-    for(auto & kv : suspected)
-    {
-        if(kv.first > a)
-            a = kv.first;
-    }
-    key_2[0] = suspected[a][0];
-    key_2[1] = suspected[a][1];
-    key_2[2] = suspected[a][2];
-    return (string)key_2;
-}
 int main()
 {
-    std::vector<char> cryptogram
+    std::vector<char> cryptogram_s
             {79, 59, 12, 2, 79, 35, 8, 28, 20, 2, 3, 68, 8, 9, 68, 45, 0, 12, 9, 67, 68, 4, 7, 5, 23, 27, 1, 21, 79, 85, 78,
              79, 85, 71, 38, 10, 71, 27, 12, 2, 79, 6, 2, 8, 13, 9, 1, 13, 9, 8, 68, 19, 7, 1, 71, 56, 11, 21, 11, 68, 6, 3,
              22, 2, 14, 0, 30, 79, 1, 31, 6, 23, 19, 10, 0, 73, 79, 44, 2, 79, 19, 6, 28, 68, 16, 6, 16, 15, 79, 35, 8, 11,
@@ -123,6 +61,6 @@ int main()
              "free", "too", "had", "hi", "right", "still", "system", "after", "computer", "best", "must", "her",
              "life", "since", "could", "does", "now", "during", "learn", "around", "usually", "form", "meat", "air",
              "day", "place", "become", "number", "public", "read", "keep", "part", "start"};
-    std::cout <<XorCypherBreaker(cryptogram, 3,dictionary);
+    std::cout<<XorCypherBreaker(cryptogram_s,3,dictionary);
     return 0;
 }

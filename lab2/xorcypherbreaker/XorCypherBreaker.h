@@ -7,5 +7,6 @@
 std::string XorCypherBreaker(const std::vector<char> &cryptogram,
                              int key_length,
                              const std::vector<std::string> &dictionary);
+int IsInDic(std::vector<std::string>dictionary,std::vector<char> a);
 
 #endif //JIMP_EXERCISES_XORCRYPTERBREAKER_H
