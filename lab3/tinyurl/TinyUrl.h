@@ -52,10 +52,21 @@ namespace tinyurl
     }
     std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec)
     {
-        * codec= Init();
-        //codec->
+        std::hash < std::string> hasz;
+        auto hash = (int)hasz(url);
+        std::array<char, 6>new_hash;
+        for(int i = 0;i < 6;i++)
+        {
+            auto c = (char)hash / 10;
+            hash = hash / 10;
+            new_hash[i] = c;
+        }
+        NextHash(& new_hash);
     }
-    std::string Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash);
+    std::string Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash)
+    {
+        return 0;
+    }
 }
 
 
