@@ -33,16 +33,14 @@ namespace datastructures
     }
     void PrintTreeInOrder(std::unique_ptr<SmartTree> & unique_ptr, std::ostream *out)
     {
-        if(unique_ptr.get()->left)
+        if(unique_ptr->left)
         {
-            unique_ptr.swap(unique_ptr->left);
-            PrintTreeInOrder(unique_ptr,out);
+            PrintTreeInOrder(unique_ptr->left, out);
         }
-        *out<<unique_ptr.get()->value<<", ";
-        if(unique_ptr.get()->right)
+        *out<<unique_ptr->value<<", ";
+        if(unique_ptr->right)
         {
-            unique_ptr.swap(unique_ptr->right);
-            PrintTreeInOrder(unique_ptr,out);
+            PrintTreeInOrder(unique_ptr->right, out);
         }
 
 
