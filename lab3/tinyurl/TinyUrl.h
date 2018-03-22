@@ -4,27 +4,33 @@
 #include <memory>
 #include<map>
 #include<vector>
+#include<iostream>
 #ifndef JIMP_EXERCISES_TINYURL_H
 #define JIMP_EXERCISES_TINYURL_H
 
-int find_indice(std::string alphabet, char x)
-{
-    for(int i = 0;i < alphabet.length();i++)
-    {
-        if(alphabet[i] == x)
-            return i;
-    }
-}
+
 namespace tinyurl
 {
     struct TinyUrlCodec
     {
-        std::array<char, 6>hash;
+        std::array<char, 6>state;
     };
+    struct ids
+    {
+
+    };
+    int find_indice(std::string alphabet, char x)
+    {
+        for(int i = 0;i < alphabet.length();i++)
+        {
+            if(alphabet[i] == x)
+                return i;
+        }
+    }
     std::unique_ptr<TinyUrlCodec> Init()
     {
-       // auto p = std::make_unique<TinyUrlCodec>(new TinyUrlCodec);
-       // return p;
+       auto p = std::unique_ptr<TinyUrlCodec>();
+       return p;
     }
     void NextHash(std::array<char, 6> *state)
     {
@@ -52,20 +58,27 @@ namespace tinyurl
     }
     std::string Encode(const std::string &url, std::unique_ptr<TinyUrlCodec> *codec)
     {
-        std::hash < std::string> hasz;
-        auto hash = (int)hasz(url);
-        std::array<char, 6>new_hash;
-        for(int i = 0;i < 6;i++)
+        std::string tinyurl;
+        std::string key = "vga";
+        int x = 0;
+        for(int i = 0;i < url.length();i++)
         {
-            auto c = (char)hash / 10;
-            hash = hash / 10;
-            new_hash[i] = c;
+            tinyurl.push_back((url[i] ^ key[x % 3]));
+            x++;
         }
-        NextHash(& new_hash);
+        return tinyurl;
     }
     std::string Decode(const std::unique_ptr<TinyUrlCodec> &codec, const std::string &hash)
     {
-        return 0;
+        int x = 0;
+        std::string url;
+        std::string key = "vga";
+        for(int i =0; i < hash.length();i++)
+        {
+            url.push_back(hash[i] ^ key[x % 3]);
+            x++;
+        }
+        return url;
     }
 }
 
