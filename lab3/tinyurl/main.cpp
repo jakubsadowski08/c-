@@ -1,8 +1,8 @@
-#include<iostream>
+#include"TinyUrl.h"
 #include<string>
-
+#include<iostream>
 int main()
 {
-    std::string alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    printf("%d", alphabet.length());
+    auto p = tinyurl::Init();
+    std::cout<<tinyurl::Encode("walono", &p);
 }

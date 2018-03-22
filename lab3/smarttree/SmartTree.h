@@ -1,0 +1,55 @@
+#include <ostream>
+#include <string>
+#include <memory>
+
+#ifndef JIMP_EXERCISES_SMARTTREE_H
+#define JIMP_EXERCISES_SMARTTREE_H
+namespace datastructures
+{
+    struct SmartTree
+    {
+        int value;
+        std::unique_ptr<SmartTree> left;
+        std::unique_ptr<SmartTree>right;
+        SmartTree() : value(0), left(nullptr), right(nullptr){ }
+        SmartTree(int data, SmartTree * leftchild,SmartTree * rightchild):value(data),left(leftchild),right(rightchild){}
+    };
+    std::unique_ptr <SmartTree> CreateLeaf(int value)
+    {
+        std::unique_ptr<SmartTree> p = std::make_unique<SmartTree>(value,nullptr,nullptr);
+        return p;
+    }
+    std::unique_ptr <SmartTree> InsertLeftChild(std::unique_ptr<SmartTree> tree, std::unique_ptr<SmartTree> left_subtree)
+    {
+        std::unique_ptr<SmartTree> new_root = std::move(tree);
+        new_root->left =std::move(left_subtree);
+        return new_root;
+    }
+    std::unique_ptr <SmartTree> InsertRightChild(std::unique_ptr<SmartTree> tree, std::unique_ptr<SmartTree> right_subtree)
+    {
+        std::unique_ptr<SmartTree> new_root = std::move(tree);
+        new_root->right =std::move(right_subtree);
+        return new_root;
+    }
+    void PrintTreeInOrder(std::unique_ptr<SmartTree> & unique_ptr, std::ostream *out)
+    {
+        if(unique_ptr.get()->left)
+        {
+            unique_ptr.swap(unique_ptr->left);
+            PrintTreeInOrder(unique_ptr,out);
+        }
+        *out<<unique_ptr.get()->value<<", ";
+        if(unique_ptr.get()->right)
+        {
+            unique_ptr.swap(unique_ptr->right);
+            PrintTreeInOrder(unique_ptr,out);
+        }
+
+
+    }
+    /*std::string DumpTree(const std::unique_ptr<SmartTree> &tree);
+    std::unique_ptr <SmartTree> RestoreTree(const std::string &tree);*/
+}
+
+
+#endif //JIMP_EXERCISES_SMARTTREE_H
