@@ -1,45 +1,60 @@
 //Definicja znajduje się w pliku Point.cpp
 #include <cmath>
-#include <ostream>
+#include <iostream>
 #include "Square.h"
 using ::std::ostream;
 using ::std::endl;
 using ::std::pow;
 using ::std::sqrt;
+using namespace std;
+geometry::Point::Point():x_(0),y_(0){
+}
+
 geometry::Point::~Point(){
-    cout << "Destruktor! Nic nie robie, bo nie musze zwalniać pamięci!";
-    cout << endl;
+}
+geometry::Point::Point(double x, double y){
+    x_ = x;
+    y_ = y;
+}
+double geometry::Point:: GetX() const
+{
+    return x_;
+}
+double geometry::Point:: GetY() const
+{
+    return y_;
 }
 geometry::Square::Square(geometry::Point a_, geometry::Point b_, geometry::Point c_, geometry::Point d_){
-    a_(a_);
-    b_(b_);
-    c_(c_);
-    d_(d_);
+    a = a_;
+    b = b_;
+    c = c_;
+    d = d_;
 }
 double geometry::Square::Circumference ()
 {
-    auto ab = sqrt((b.x - a.x)* (b.x - a.x)  + (b.y - a.y) * (b.y - a.y));
-    auto ac = sqrt((c.x - a.x) * (c.x - a.x) + ( c.y - a.y) *  (c.y - a.y));
-    auto bd = sqrt((d.x - b.x) * (d.x - b.x) + ( d.y - b.y) *  (d.y - b.y));
-    auto cd = sqrt((d.x - c.x) * (d.x - c.x) + ( d.y - c.y) *  (d.y - c.y));
-    return ab + ac + bd + cd;
+    double ab;
+    if(sqrt((d.GetX() - a.GetX())* (d.GetX() - a.GetX())  + (d.GetY() - a.GetY()) * (d.GetY() - a.GetY())) == sqrt((c.GetX() - b.GetX())* (c.GetX() - b.GetX())  + (c.GetY() - b.GetY()) * (c.GetY() - b.GetY())))
+    {
+        ab = sqrt((b.GetX() - a.GetX())* (b.GetX() - a.GetX())  + (b.GetY() - a.GetY()) * (b.GetY() - a.GetY()));
+        return 4 * ab;
+    }
+    else
+    {
+        return 0;
+    }
 
 }
 double geometry::Square::Area()
 {
-    if(sqrt((d.x - a.x)* (d.x - a.x)  + (d.y - a.y) * (d.y - a.y)) == sqrt((c.x - b.x)* (c.x - b.x)  + (c.y - b.y) * (c.y - b.y)))
+    if(sqrt((d.GetX() - a.GetX())* (d.GetX() - a.GetX())  + (d.GetY() - a.GetY()) * (d.GetY() - a.GetY())) == sqrt((c.GetX() - b.GetX())* (c.GetX() - b.GetX())  + (c.GetY() - b.GetY()) * (c.GetY() - b.GetY())))
     {
-        auto bok = sqrt((b.x - a.x)* (b.x - a.x)  + (b.y - a.y) * (b.y - a.y));
+        auto bok = sqrt((b.GetX() - a.GetX())* (b.GetX() - a.GetX())  + (b.GetY() - a.GetY()) * (b.GetY() - a.GetY()));
         return bok * bok;
     }
-}
-geometry::Point::Point():x_(0),y_(0){
-    cout << "Konstruktor bezparametrowy" << endl;
+    else
+    {
+        return 0;
+    }
 }
 
-geometry::Point::Point(double x, double y){
-    cout << "Konstruktor parametrowy" << endl;
-    x_ = x;
-    y_ = y;
-}
 
