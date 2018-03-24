@@ -1,7 +1,6 @@
 #include <ostream>
 #include <string>
 #include <memory>
-std::string dump;
 #ifndef JIMP_EXERCISES_SMARTTREE_H
 #define JIMP_EXERCISES_SMARTTREE_H
 namespace datastructures
@@ -45,6 +44,7 @@ namespace datastructures
     }
     std::string DumpTree(const std::unique_ptr<SmartTree> &tree)
     {
+        std::string dump;
         if(tree)
         {
             dump = dump + "[" + std::to_string(tree->value) + " ";
@@ -54,8 +54,8 @@ namespace datastructures
         else
         {
             dump = dump  + "[none]";
+            return dump;
         }
-        return dump;
     }
 }
 
