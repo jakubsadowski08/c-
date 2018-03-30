@@ -24,44 +24,64 @@ int IsInDic(std::vector<std::string>dictionary,vector<char> a)
 
 string XorCypherBreaker(const vector<char> &cryptogram,int key_length, const vector<string> &dictionary)
 {
-    int x,sum,a = 0;
-    char key[4];
-    char key_2[3];
-    std::map<int,string>suspected;
-    vector<char>pos;
-    pos.emplace_back('a');
-    pos.emplace_back('a');
-    pos.emplace_back('a');
+    char element;
+    string bufor;
+    std::vector<string> words;
+    std::vector<char> chars;
+    string key;
+    bool f = false;
+    int is_in = 0;
+    int is_not_in = 0;
     for (int i = 97; i < 123; i++) {
         for (int j = 97; j < 123; j++) {
             for (int k = 97; k < 123; k++) {
-                for(int l = 0; l < cryptogram.size() / 3; l = l+3)
+                char possible_key [] = {(char)i,(char)j,(char)k};
+                unsigned long rozmiar=cryptogram.size();
+                for(unsigned long x=0; x<rozmiar; x++)
                 {
-                    pos[0] = (char)i ^ cryptogram[l];
-                    pos[1] = (char)j ^ cryptogram[l+1];
-                    pos[2] = (char)k ^ cryptogram[l+2];
-                    x = IsInDic(dictionary,pos);
-                    if(x != 0)
+                    element=(cryptogram[x]^(possible_key[x%3]));
+                    chars.push_back(element);
+                }
+                for(auto value : chars)
+                {
+
+                    if (isalpha(value)){
+                        bufor += value;
+
+                    } else if(bufor.length()>0)
                     {
-                        sum = sum + x;
-                        x = 0;
+                        words.push_back(bufor);
+                        bufor = "";
+                    } else
+                    {
+                        continue;
                     }
                 }
-                key[0] = (char)i;
-                key[1] = (char)j;
-                key[2] = (char)k;
-                suspected[sum] = (string)key;
-                sum = 0;
+                for(unsigned long x=0; x<words.size(); x++)
+                {
+                    if (find(dictionary.begin(),dictionary.end(),words[x]) != dictionary.end())
+                    {
+                        is_in++;
+                    }
+                    else
+                    {
+                        is_not_in++;
+                    }
+                }
+                if(is_in>is_not_in)
+                {
+                    for(const auto & c : possible_key)
+                    {
+                        key+=c;
+                    }
+                    return key;
+                }
+                is_in = 0;
+                is_not_in = 0;
+                words.clear();
+                chars.clear();
             }
         }
     }
-    for(auto & kv : suspected)
-    {
-        if(kv.first > a)
-            a = kv.first;
-    }
-    key_2[0] = suspected[a][0];
-    key_2[1] = suspected[a][1];
-    key_2[2] = suspected[a][2];
-    return (string)key_2;
+    return nullptr;
 }
