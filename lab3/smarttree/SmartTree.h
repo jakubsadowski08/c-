@@ -57,6 +57,10 @@ namespace datastructures
             return dump;
         }
     }
+    std::unique_ptr <SmartTree> RestoreTree(const std::string &tree)
+    {
+
+    }
 }
 
 
