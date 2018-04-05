@@ -1,6 +1,4 @@
-#include "SimpleTemplateEngine.h"
+//
+// Created by michal on 05.04.18.
+//
 
-int main()
-{
-
-}

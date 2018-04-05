@@ -1,28 +1,38 @@
-#ifndef PROJECTNAME_PATH_POINT_H_
-#define PROJECTNAME_PATH_POINT_H_
+//
+// Created by zychmich on 23.03.18.
+//
+
+#ifndef JIMP_EXERCISES_SQUARE_H
+#define JIMP_EXERCISES_SQUARE_H
+#include <cmath>
+#include <iostream>
+#include "Point.h"
+
+
 namespace geometry
 {
-    class Point {
+    class Square
+    {
     public:
-        Point();
-        ~Point();
-        Point(double x, double y);
-        double GetX() const;
-        double GetY() const;
+        //Konstruktor bezparametrowy
+        Square();
+        //Konstruktor parametrowy
+        Square(Point a_, Point b_,Point c_,Point d_);
+        //Destruktor wykonywany przed zwolnieniem pamięci
+        ~Square();
+
+        //Metody nie modyfikujące stanu obiektu (const na końcu metody)
+        //nie mogą zmodyfikować tego obiektu.
+        double Circumference() const;
+        double Area() const;
+
 
     private:
-        double x_, y_;
-    };
-    class Square {
-    public:
-        Square(Point a, Point b,Point c, Point D);
-        double Circumference ();
-        double Area();
-    private:
-        geometry::Point a,b,c,d;
+        //w przeciwienstwie do pythona C++ wymaga jawnej deklaracji składowych pól klasy:
+        Point a_, b_, c_, d_;
+
     };
 }
 
 
-#endif  // PROJECTNAME_PATH_POINT_H_
-
+#endif //JIMP_EXERCISES_SQUARE_H

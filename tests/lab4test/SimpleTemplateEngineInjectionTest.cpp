@@ -6,7 +6,7 @@
 #include <memory>
 #include <MemLeakTest.h>
 #include <StringUtility.h>
-#include "../../lab4/netstemplateengine/SimpleTemplateEngine.h"
+#include <SimpleTemplateEngine.h>
 
 using ::nets::View;
 using ::std::make_unique;

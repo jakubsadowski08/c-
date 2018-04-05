@@ -1,4 +1,13 @@
-#include"SimpleTemplateEngine.h"
+//
+// Created by michal on 05.04.18.
+//
+
+#include <string>
+#include <unordered_map>
+#include <map>
+#include <regex>
+#include "SimpleTemplateEngine.h"
+using namespace nets;
 
 void replaceAll(std::string& str, const std::string& from, const std::string& to) {
     if(from.empty())
@@ -6,15 +15,21 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
     size_t start_pos = 0;
     while((start_pos = str.find(from, start_pos)) != std::string::npos) {
         str.replace(start_pos, from.length(), to);
-        start_pos += to.length(); // In case 'to' conains 'from', like replacing 'x' with 'yx'
+        start_pos += to.length();
     }
 }
-nets::View::View(std::string napis)
-{
-    text = napis;
-}
-nets::View::Render(const std::unordered_map <std::string, std::string> &model) const
-{
 
-    auto i = model.end();
+View::View(std::string napis)
+{
+    text=napis;
 }
+
+
+std::string View::Render(const std::unordered_map<std::string, std::string> &model) const
+{
+    std::map<std::string, std::string> mapa;
+    for (auto i = model.begin()) {
+
+    }
+}
+
