@@ -11,11 +11,12 @@ namespace nets
 {
     class View
     {
-        std::string text;
-        //std::unordered_map <std::string, std::string> model;
     public:
         View(std::string napis);
+        //~View();
         std::string Render(const std::unordered_map <std::string, std::string> &model) const;
+    private:
+        std::string text;
     };
 
 }
