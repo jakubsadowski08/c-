@@ -1,15 +1,6 @@
 #include <sstream>
 #include "SimpleJson.h"
 using namespace nets;
-JsonValue::JsonValue()
-{
-    bool_ = nullptr;
-    int_ = nullptr;
-    double_ = nullptr;
-    string_ = nullptr;
-    map_ = nullptr;
-    vector_ = nullptr;
-}
 JsonValue::JsonValue(bool a)
 {
     bool_ = new bool;
@@ -24,7 +15,7 @@ JsonValue::JsonValue(int a)
 {
     bool_ = nullptr;
     int_ = new int;
-    *int_ = a;
+    * int_ = a;
     double_ = nullptr;
     string_ = nullptr;
     map_ = nullptr;
@@ -84,14 +75,16 @@ std::experimental::optional<JsonValue> JsonValue::ValueByName(const std::string 
 std::string JsonValue::ToString() const {
     std::stringstream stream;
     std::string values;
-    if (int_) {
-        //values = std::to_string(*int_);
-       // return values;
-        return "0";
+    if (int_ != nullptr) {
+        stream<<*int_;
+        stream >>values;
+        delete int_;
+        return values;
     }
     if (double_) {
         stream<<*double_;
         stream>>values;
+        delete double_;
         return values;
     }
     if (bool_) {
@@ -100,6 +93,7 @@ std::string JsonValue::ToString() const {
         else {
             values = "false";
         }
+        delete bool_;
         return values;
     }
     if (vector_) {
@@ -108,6 +102,7 @@ std::string JsonValue::ToString() const {
             values = values + value.ToString() + ", ";
         }
         values.erase(values.length() - 2, 2);
+        delete vector_;
         return values + "]";
     }
     if (map_) {
@@ -121,6 +116,7 @@ std::string JsonValue::ToString() const {
         }
         values.erase(values.length() - 2, 2);
         values += '}';
+        delete map_;
         return values;
     }
     if (string_) {
@@ -134,21 +130,11 @@ std::string JsonValue::ToString() const {
         }
 
         values += '\"';
+        delete string_;
         return values;
     }
 }
 
 JsonValue::~JsonValue() {
-    if(bool_)
-        delete bool_;
-    if(int_)
-        delete int_;
-    if(double_)
-        delete double_;
-    if(string_)
-        delete string_;
-    if(map_)
-        delete map_;
-    if(vector_)
-        delete vector_;
+
 }
