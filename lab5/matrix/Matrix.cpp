@@ -13,17 +13,19 @@ Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> c)
         x_->emplace_back(v);
     }
 }
+Matrix::Matrix()
+{
+    x_ = new std::vector<std::vector<std::complex<double>>>;
+    si.first = 0;
+    si.second = 0;
+}
 Matrix::Matrix(size_t a, size_t b)
 {
-    x_ = new std::vector<std::vector<std::complex<double>>>(a);
-    for(int i =0;i < b;i++)
-    {
-        x_[i] = new std::vector<std::complex<double>>(b);
-    }
+    x_ = new std::vector<std::vector<std::complex<double>>>;
     si.first = a;
     si.second = b;
 }
-Matrix:: Matrix (const Matrix & other)
+Matrix::Matrix (const Matrix & other)
 {
     x_ = new std::vector<std::vector<std::complex<double>>>;
     *x_ = *other.x_;
@@ -32,7 +34,7 @@ Matrix:: Matrix (const Matrix & other)
 
 
 
-std::string Matrix::Print()
+std::string Matrix::Print() const
 {
     std::stringstream stream;
     std::string w = "[";
@@ -54,18 +56,45 @@ std::string Matrix::Print()
     w.erase(w.length() - 2);
     return w + "]";
 }
-Matrix Matrix::Add(const Matrix & other) const
+Matrix::Matrix(Matrix&& other) noexcept
 {
-    Matrix sum = Matrix{other.Size().first,other.Size().second};
-    int a=0, b =0;
-    for(auto i = x_->begin();i !=x_->end();i++)
-    {
-        for (auto j = i->begin();j != i->end();j++) {
-
-            (*sum.x_)[0][0] = *j;
-        }
-    }
+    *x_ = *other.x_;
+    other.x_ = nullptr;
 }
-std::pair<size_t, size_t> Matrix::Size()const {
+Matrix Matrix::Add(Matrix other) const{
+    auto * sum = new Matrix;
+    sum->x_ = new std::vector<std::vector<std::complex<double>>>;
+    sum->si.first =0;
+    sum->si.second = 0;
+    auto o = *other.x_;
+    auto m = *x_;
+    auto s = *sum->x_;
+    std::vector<std::complex<double>> p(3);
+    for(int i =0;i < o.size();i++)
+    {
+        for(int j =0;j<o[0].size();j++)
+        {
+            p[j] = m[i][j] + o[i][j];
+        }
+        s.emplace_back(p);
+    }
+    return * sum;
+}
+Matrix Matrix::Sub(Matrix other) const{
+    Matrix sum = Matrix{};
+    auto o = *other.x_;
+    auto m = *x_;
+    auto s = *sum.x_;
+    for(int i =0;i < o.size();i++)
+    {
+        for(int j =0;j<o[0].size();j++)
+        {
+            o[i][j] =  (m[i][j] - o[i][j]);
+        }
+        s.emplace_back(o[i]);
+    }
+
+}
+std::pair<size_t, size_t> Matrix::Size() const {
     return si;
 }

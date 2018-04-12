@@ -16,9 +16,11 @@ namespace algebra
         Matrix(std::initializer_list<std::vector<std::complex<double>>> c);
         Matrix(size_t a,size_t b);
         Matrix (const Matrix & other);
-        std::string Print();
+        Matrix (Matrix && other) noexcept;
+        std::string Print() const;
         std::pair<size_t, size_t> Size()const;
-        Matrix Add(const Matrix & other) const;
+        Matrix Add(Matrix other) const;
+        Matrix Sub(Matrix other) const;
 
     private:
         std::vector<std::vector<std::complex<double>>> *x_;
