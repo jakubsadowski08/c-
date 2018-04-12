@@ -25,7 +25,6 @@ class TextPoolTests : public ::testing::Test, MemLeakTest {
 TEST_F(TextPoolTests, IsAbleToStoreDuplicatedValuesAtTheSamePlace) {
 
   TextPool pool{};
-
   vector<string> values{"abc", "efg", "hij", "klmn", "oprst", "abc"};
   for (const string &v : values) {
     pool.Intern(v);
