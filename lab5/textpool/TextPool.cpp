@@ -2,8 +2,6 @@
 // Created by jak on 12.04.18.
 //
 
-#include <cassert>
-#include<algorithm>
 #include<iterator>
 #include "TextPool.h"
 using namespace pool;
@@ -18,11 +16,6 @@ TextPool::TextPool(std::initializer_list<std::experimental::string_view > c)
     {
         strs->emplace_back(v);
     }
-}
-TextPool::TextPool(const TextPool & other)
-{
-    strs = new std::vector<std::experimental::string_view>;
-    *strs = *other.strs;
 }
 TextPool::~TextPool()
 {
@@ -44,7 +37,7 @@ TextPool::TextPool(TextPool &&other) noexcept
     }
     other.strs = nullptr;
 }
-TextPool & TextPool::operator=(const TextPool &other)
+/*TextPool & TextPool::operator=(const TextPool &other)
 {
     TextPool tmp(other);
     bool b;
@@ -64,7 +57,7 @@ TextPool & TextPool::operator=(const TextPool &other)
         }
     }
     return * this;
-}
+}*/
 TextPool & TextPool::operator=(TextPool&& other) noexcept
 {
     if (this == &other)
