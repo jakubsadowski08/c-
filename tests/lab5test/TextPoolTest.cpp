@@ -66,7 +66,7 @@ TEST_F(TextPoolTests, IsAbleToMoveChunks) {
 
   EXPECT_EQ(6, moved_pool.StoredStringCount());
   EXPECT_EQ(0, pool.StoredStringCount());
-  EXPECT_EQ("abc", pool.Intern("abc"));
+  EXPECT_EQ("abc", pool.Intern("abc")); // tutaj sie wykuzwil
   EXPECT_EQ("abc", moved_pool.Intern("abc"));
   EXPECT_EQ(1, pool.StoredStringCount());
   EXPECT_EQ(6, moved_pool.StoredStringCount());

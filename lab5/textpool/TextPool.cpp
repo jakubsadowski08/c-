@@ -31,6 +31,17 @@ TextPool::~TextPool()
 TextPool::TextPool(TextPool &&other) noexcept
 {
     strs = other.strs;
+    for(auto  i =strs->begin() ;i != strs->end();i++)
+    {
+        for(auto j = strs->begin();j < strs->end();j++)
+        {
+            if(i < j && (*i == *j))
+            {
+                strs->erase(j);
+                j--;
+            }
+        }
+    }
     other.strs = nullptr;
 }
 TextPool & TextPool::operator=(const TextPool &other)
@@ -52,7 +63,6 @@ TextPool & TextPool::operator=(const TextPool &other)
             this->strs->emplace_back(std::move(x));
         }
     }
-    //*this = std::move(tmp);
     return * this;
 }
 TextPool & TextPool::operator=(TextPool&& other) noexcept
@@ -68,16 +78,27 @@ TextPool & TextPool::operator=(TextPool&& other) noexcept
 }
 std::experimental::string_view TextPool::Intern(const std::string &str)
 {
+    if(strs==nullptr)
+    {
+        strs = new std::vector<std::experimental::string_view >;
+        strs->emplace_back(str);
+        return str;
+    }
     for(auto v : *strs)
     {
         if(str == v)
         {
-            return str;
+            return v;
         }
     }
     strs->emplace_back(str);
+    return str;
 }
 size_t TextPool::StoredStringCount() const
 {
+    if(strs == nullptr)
+    {
+        return 0;
+    }
     return strs->size();
 }
