@@ -5,11 +5,15 @@
 int main()
 {
     std::stringstream s;
-    std::complex<double> z1 = 1i * 1i;
-    s << z1;
-    std::string w ;
+    double x = 5.55555;
+    s.precision(3);
+    s << x;
+    std::string w;
+    s >>w;
+    s << x;
     s >> w;
     std::cout <<w;
+
 
 }
 

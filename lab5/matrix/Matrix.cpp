@@ -30,18 +30,42 @@ Matrix::Matrix (const Matrix & other)
 
 std::string Matrix::Print() const
 {
-    std::stringstream stream;
+
     std::string w = "[";
+    std::string r;
+    std::string i;
     for(const auto &  v : x_)
     {
 
         for(auto x : v)
         {
-            w += std::to_string((int)x.real());
+            std::stringstream re;
+            std::stringstream im;
+            auto h = (int)x.imag();
+            int s = 1;
+            while(h)
+            {
+                h = h / 10;
+                s++;
+            }
+            im.precision(s);
+            im << x.imag();
+            im >>i;
+            //
+            h = (int)x.real();
+            s = 1;
+            while(h)
+            {
+                h = h / 10;
+                s++;
+            }
+            re.precision(s);
+            re << x.real();
+            re >>r;
+            w+=r;
             w+="i";
-            w += std::to_string((int)x.imag());
+            w+=i;
             w+= ", ";
-            //Matrix m1{{1.0i, 0., 0.}, {0., 1.0i, 0.}, {0., 0., 1.0i}};
             //"[0i1, 0i0, 0i0; 0i0, 0i1, 0i0; 0i0, 0i0, 0i1]"
         }
         w.erase(w.length() - 2);
