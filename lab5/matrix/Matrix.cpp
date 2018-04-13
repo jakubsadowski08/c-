@@ -43,6 +43,10 @@ std::string Matrix::Print() const
             std::stringstream im;
             auto h = (int)x.imag();
             int s = 1;
+            if(h == 0)
+            {
+                s = 2;
+            }
             while(h)
             {
                 h = h / 10;
@@ -54,6 +58,10 @@ std::string Matrix::Print() const
             //
             h = (int)x.real();
             s = 1;
+            if(h == 0)
+            {
+                s = 2;
+            }
             while(h)
             {
                 h = h / 10;

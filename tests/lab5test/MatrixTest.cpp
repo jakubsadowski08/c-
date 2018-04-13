@@ -97,7 +97,7 @@ TEST_F(MatrixTests, IsAbleToMultiplyMatrices2) {
                 "112i112, 47.1i102.1, -13.6i57.2, 2.6i11.8]", m1.Mul(m2).Print());
   EXPECT_EQ("[1i3, 2i2; 3i1, 4i6; 5i5, 6i4]", m1.Print());
   EXPECT_EQ("[7i1, 12i1.3, 1.5i3.7, 0i1; 15i2, 2i4.6, 2.1i3.8, 1.4i0.2]", m2.Print());
-} /*
+}
 
 TEST_F(MatrixTests, MatricesWithMismatchingSizesShouldResultWithEmptyMatrix) {
   Matrix m1{{1.0i}, {1.0i}};
