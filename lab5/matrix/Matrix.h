@@ -22,9 +22,10 @@ namespace algebra
         Matrix Add(Matrix other) const;
         Matrix Sub(Matrix other) const;
         Matrix Mul(Matrix other) const;
-
-    private:
+        Matrix Pow(int a) const;
         std::vector<std::vector<std::complex<double>>>x_;
+    private:
+
         std::pair<size_t, size_t> si;
     };
 }

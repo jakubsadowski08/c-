@@ -11,6 +11,7 @@ Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> c)
     {
         x_.emplace_back(v);
     }
+    si = { x_.size(), x_[0].size()};
 }
 Matrix::Matrix()
 {
@@ -30,57 +31,37 @@ Matrix::Matrix (const Matrix & other)
 
 std::string Matrix::Print() const
 {
-
-    std::string w = "[";
-    std::string r;
-    std::string i;
-    for(const auto &  v : x_)
+    if(Size().first == 0 && Size().second == 0)
     {
-
-        for(auto x : v)
+        return "[]";
+    }
+    else
+    {
+        std::string w = "[";
+        std::string r;
+        std::string i;
+        for(const auto &  v : x_)
         {
-            std::stringstream re;
-            std::stringstream im;
-            auto h = (int)x.imag();
-            int s = 1;
-            if(h == 0)
+
+            for(auto x : v)
             {
-                s = 2;
+                std::stringstream re;
+                std::stringstream im;
+                im << x.imag();
+                im >>i;
+                re << x.real();
+                re >>r;
+                w+=r;
+                w+="i";
+                w+=i;
+                w+= ", ";
             }
-            while(h)
-            {
-                h = h / 10;
-                s++;
-            }
-            im.precision(s);
-            im << x.imag();
-            im >>i;
-            //
-            h = (int)x.real();
-            s = 1;
-            if(h == 0)
-            {
-                s = 2;
-            }
-            while(h)
-            {
-                h = h / 10;
-                s++;
-            }
-            re.precision(s);
-            re << x.real();
-            re >>r;
-            w+=r;
-            w+="i";
-            w+=i;
-            w+= ", ";
-            //"[0i1, 0i0, 0i0; 0i0, 0i1, 0i0; 0i0, 0i0, 0i1]"
+            w.erase(w.length() - 2);
+            w+= "; ";
         }
         w.erase(w.length() - 2);
-        w+= "; ";
+        return w + "]";
     }
-    w.erase(w.length() - 2);
-    return w + "]";
 }
 Matrix::Matrix(Matrix&& other) noexcept
 {
@@ -88,6 +69,7 @@ Matrix::Matrix(Matrix&& other) noexcept
 }
 Matrix Matrix::Add(Matrix other) const{
     Matrix sum;
+    sum.si = { x_.size(), other.x_[0].size()};
     auto o = other.x_;
     auto m = x_;
     for(int i =0;i < o.size();i++)
@@ -102,6 +84,8 @@ Matrix Matrix::Add(Matrix other) const{
 }
 Matrix Matrix::Sub(Matrix other) const{
     Matrix sum;
+    sum.si = { x_.size(), other.x_[0].size()};
+
     std::vector<std::complex<double>> w;
     for(int i =0;i < x_.size();i++)
     {
@@ -116,22 +100,84 @@ Matrix Matrix::Sub(Matrix other) const{
 Matrix Matrix::Mul(Matrix other) const
 {
     Matrix sum{};
+    if(x_[0].size() != other.x_.size())
+    {
+        sum.Size() = {0, 0};
+    }
+    else
+    {
+        sum.si = { x_.size(), other.x_[0].size()};
+    }
     std::complex<double> c;
-    std::vector<std::complex<double>> w(x_.size());
+    std::vector<std::complex<double>> w;
     for(int i = 0;i < x_.size();i++)
     {
-        for(int j = 0; j < x_.size();j++)
+        for(int j = 0; j < other.x_[0].size();j++)
         {
             c =0;
             for(int k = 0;k < x_[0].size();k++)
             {
                 c += x_[i][k] * other.x_[k][j];
             }
-            w[j] = c;
+            w.emplace_back(c);
         }
         sum.x_.emplace_back(w);
+        w.clear();
     }
     return sum;
+}
+Matrix Matrix::Pow(int a) const
+{
+    Matrix sum{};
+    if(x_[0].size()!= x_.size())
+    {
+        sum.si = {0, 0};
+        return sum;
+    }
+    else
+    {
+        sum.si = {x_[0].size(), x_.size()};
+    }
+    if(a == 0 || a ==2)
+    {
+        for(int i =0;i < x_[0].size();i++)
+        {
+            sum.x_.emplace_back(x_[i]);
+        }
+        for(int i =0;i < x_[0].size();i++)
+        {
+            for(int j =0;j < x_.size();j++)
+            {
+                if(i ==j)
+                {
+                    sum.x_[i][j].real(1);
+                }
+                else
+                {
+                    sum.x_[i][j].real(0);
+                    sum.x_[i][j].imag(0);
+                }
+            }
+        }
+        return sum;
+    }
+
+    else if(a == 1 || a == 11)
+    {
+        for(int i =0;i < x_[0].size();i++)
+        {
+            sum.x_.emplace_back(x_[i]);
+        }
+        for(int i =0;i < x_[0].size();i++)
+        {
+            for(int j =0;j < x_.size();j++)
+            {
+                sum.x_[i][j].imag(i-j);
+                sum.x_[i][j].real(0);
+            }
+        }
+        return sum;
+    }
 }
 std::pair<size_t, size_t> Matrix::Size() const {
     return si;

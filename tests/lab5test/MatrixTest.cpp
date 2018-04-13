@@ -151,4 +151,4 @@ TEST_F(MatrixTests, PowReturnsEmptyMatrixWhenMatrixIsNotSquared) {
   EXPECT_EQ("[]", not_pauli.Pow(3).Print());
   pair<size_t, size_t> expected_size{0, 0};
   EXPECT_EQ(expected_size, not_pauli.Pow(3).Size());
-}*/
+}
