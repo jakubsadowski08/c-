@@ -122,7 +122,6 @@ TEST_F(MatrixTests, CanComputeZerothPowerOfSecondPualiMatrix) {
 TEST_F(MatrixTests, CanComputeFirstPowerOfSecondPualiMatrix) {
   Matrix pauli{{0.0, 0.0 - 1.0i}, {1.0i, 0.0}};
   EXPECT_EQ("[0i0, 0i-1; 0i1, 0i0]", pauli.Pow(1).Print());
-
   pair<size_t, size_t> expected_size{2, 2};
   EXPECT_EQ(expected_size, pauli.Pow(1).Size());
   EXPECT_EQ(pauli.Print(), pauli.Pow(1).Print());

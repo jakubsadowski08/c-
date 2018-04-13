@@ -67,6 +67,12 @@ Matrix::Matrix(Matrix&& other) noexcept
 {
     x_ = other.x_;
 }
+Matrix & Matrix::operator= (const Matrix& other)
+{
+    Matrix tmp(other);         // re-use copy-constructor
+    *this = std::move(tmp); // re-use move-assignment
+    return *this;
+}
 Matrix Matrix::Add(Matrix other) const{
     Matrix sum;
     sum.si = { x_.size(), other.x_[0].size()};
@@ -138,7 +144,7 @@ Matrix Matrix::Pow(int a) const
     {
         sum.si = {x_[0].size(), x_.size()};
     }
-    if(a == 0 || a ==2)
+    if(a == 0)
     {
         for(int i =0;i < x_[0].size();i++)
         {
@@ -161,23 +167,19 @@ Matrix Matrix::Pow(int a) const
         }
         return sum;
     }
-
-    else if(a == 1 || a == 11)
+    if(a == 1)
     {
-        for(int i =0;i < x_[0].size();i++)
-        {
-            sum.x_.emplace_back(x_[i]);
-        }
-        for(int i =0;i < x_[0].size();i++)
-        {
-            for(int j =0;j < x_.size();j++)
-            {
-                sum.x_[i][j].imag(i-j);
-                sum.x_[i][j].real(0);
-            }
-        }
+        sum.x_ = x_;
         return sum;
     }
+    auto tmp = *this;
+    auto tmp_2 = *this;
+    sum.x_ = tmp.Mul(tmp_2).x_;
+    for(int i = 2 ; i != a;i++)
+    {
+        sum.x_ = tmp.Mul(sum).x_;
+    }
+    return sum;
 }
 std::pair<size_t, size_t> Matrix::Size() const {
     return si;

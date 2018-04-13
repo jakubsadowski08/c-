@@ -17,6 +17,7 @@ namespace algebra
         Matrix(size_t a,size_t b);
         Matrix (const Matrix & other);
         Matrix (Matrix && other) noexcept;
+        Matrix & operator= (const Matrix& other);
         std::string Print() const;
         std::pair<size_t, size_t> Size()const;
         Matrix Add(Matrix other) const;
