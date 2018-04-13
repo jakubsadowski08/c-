@@ -1,44 +1,38 @@
 //
 // Created by sad on 12.04.18.
 //
-
+#include <iomanip>
 #include "Matrix.h"
 using namespace algebra;
 
 Matrix::Matrix(std::initializer_list<std::vector<std::complex<double>>> c)
 {
-    x_ = new std::vector<std::vector<std::complex<double>>>;
     for(const auto & v : c)
     {
-        x_->emplace_back(v);
+        x_.emplace_back(v);
     }
 }
 Matrix::Matrix()
 {
-    x_ = new std::vector<std::vector<std::complex<double>>>;
     si.first = 0;
     si.second = 0;
 }
 Matrix::Matrix(size_t a, size_t b)
 {
-    x_ = new std::vector<std::vector<std::complex<double>>>;
     si.first = a;
     si.second = b;
 }
 Matrix::Matrix (const Matrix & other)
 {
-    x_ = new std::vector<std::vector<std::complex<double>>>;
-    *x_ = *other.x_;
+    x_ = other.x_;
 }
-
-
 
 
 std::string Matrix::Print() const
 {
     std::stringstream stream;
     std::string w = "[";
-    for(const auto &  v : *x_)
+    for(const auto &  v : x_)
     {
 
         for(auto x : v)
@@ -58,42 +52,54 @@ std::string Matrix::Print() const
 }
 Matrix::Matrix(Matrix&& other) noexcept
 {
-    *x_ = *other.x_;
-    other.x_ = nullptr;
+    x_ = other.x_;
 }
 Matrix Matrix::Add(Matrix other) const{
-    auto * sum = new Matrix;
-    sum->x_ = new std::vector<std::vector<std::complex<double>>>;
-    sum->si.first =0;
-    sum->si.second = 0;
-    auto o = *other.x_;
-    auto m = *x_;
-    auto s = *sum->x_;
-    std::vector<std::complex<double>> p(3);
+    Matrix sum;
+    auto o = other.x_;
+    auto m = x_;
     for(int i =0;i < o.size();i++)
     {
         for(int j =0;j<o[0].size();j++)
         {
-            p[j] = m[i][j] + o[i][j];
+            o[i][j] +=  m[i][j];
         }
-        s.emplace_back(p);
+        sum.x_.emplace_back(o[i]);
     }
-    return * sum;
+    return sum;
 }
 Matrix Matrix::Sub(Matrix other) const{
-    Matrix sum = Matrix{};
-    auto o = *other.x_;
-    auto m = *x_;
-    auto s = *sum.x_;
-    for(int i =0;i < o.size();i++)
+    Matrix sum;
+    std::vector<std::complex<double>> w;
+    for(int i =0;i < x_.size();i++)
     {
-        for(int j =0;j<o[0].size();j++)
+        for(int j =0;j < x_[0].size();j++)
         {
-            o[i][j] =  (m[i][j] - o[i][j]);
+            other.x_[i][j] =  x_[j][i] - other.x_[i][j] ;
         }
-        s.emplace_back(o[i]);
+        sum.x_.emplace_back(other.x_[i]);
     }
-
+    return sum;
+}
+Matrix Matrix::Mul(Matrix other) const
+{
+    Matrix sum{};
+    std::complex<double> c;
+    std::vector<std::complex<double>> w(x_.size());
+    for(int i = 0;i < x_.size();i++)
+    {
+        for(int j = 0; j < x_.size();j++)
+        {
+            c =0;
+            for(int k = 0;k < x_[0].size();k++)
+            {
+                c += x_[i][k] * other.x_[k][j];
+            }
+            w[j] = c;
+        }
+        sum.x_.emplace_back(w);
+    }
+    return sum;
 }
 std::pair<size_t, size_t> Matrix::Size() const {
     return si;

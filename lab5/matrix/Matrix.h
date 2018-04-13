@@ -21,9 +21,10 @@ namespace algebra
         std::pair<size_t, size_t> Size()const;
         Matrix Add(Matrix other) const;
         Matrix Sub(Matrix other) const;
+        Matrix Mul(Matrix other) const;
 
     private:
-        std::vector<std::vector<std::complex<double>>> *x_;
+        std::vector<std::vector<std::complex<double>>>x_;
         std::pair<size_t, size_t> si;
     };
 }
