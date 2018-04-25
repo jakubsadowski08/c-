@@ -51,7 +51,7 @@ TEST_F(PeselTests, ValidPesel44051401359NotThrowsAnyException) {
 TEST_F(PeselTests, ThereAreNoMemoryLeaksAfterThrowingAnExcpetion) {
   EXPECT_THROW(make_unique<Pesel>("44051401354"),InvalidPeselChecksum);
 }
-
+/*
 TEST_F(PeselTests, BaseClassOfInvalidPeselChecksumIsDataValidationErrorThen__runtime_error__Then__exception) {
   EXPECT_THROW(Pesel("00000000001"),AcademiaDataValidationError);
   EXPECT_THROW(Pesel("00000000001"),std::runtime_error);
@@ -73,4 +73,4 @@ TEST_F(PeselTests, TheMessageOfInvalidPeselLength) {
   EXPECT_STREQ("Invalid PESEL(0000000000) length: 10",ex->what());
 }
 
-
+*/
