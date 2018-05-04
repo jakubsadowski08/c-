@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <MemLeakTest.h>
 #include <StringUtility.h>
-#include <MovieSubtitles.h>
+#include "../../lab8/subtitles/MovieSubtitles.h"
 
 using ::moviesubs::SubRipSubtitles;
 using ::utility::MatchesUpToExtraNewLine;
@@ -32,10 +32,7 @@ TEST_F(SubRipCorrectCasesTest, SubtitlesMovedBy300ms) {
 
 TEST_F(SubRipCorrectCasesTest, SubtitlesMovedBy1500ms) {
   auto subs = make_unique<SubRipSubtitles>();
-  stringstream in {"1\n"
-                       "00:20:41,150 --> 00:20:45,109\n"
-                       "- How did he do that?\n"
-                       "- Made him an offer he couldn't refuse.\n\n"};
+  stringstream in {"1\n00:20:41,150 --> 00:20:45,109\n- How did he do that?\n- Made him an offer he couldn't refuse.\n\n"};
   stringstream out;
   EXPECT_NO_THROW(subs->ShiftAllSubtitlesBy(1500, 25, &in, &out));
   EXPECT_PRED2(MatchesUpToExtraNewLine,"1\n00:20:42,650 --> 00:20:46,609\n- How did he do that?\n- Made him an offer he couldn't refuse.\n\n"s,out.str());

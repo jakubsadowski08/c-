@@ -7,7 +7,7 @@
 #include <memory>
 #include <stdexcept>
 #include <MemLeakTest.h>
-#include <MovieSubtitles.h>
+#include "../../lab8/subtitles/MovieSubtitles.h"
 
 using ::moviesubs::MicroDvdSubtitles;
 using ::moviesubs::NegativeFrameAfterShift;
