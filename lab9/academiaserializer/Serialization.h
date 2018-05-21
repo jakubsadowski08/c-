@@ -114,6 +114,11 @@ namespace academia {
 
         void Footer(const std::string &object_name) override;
     };
+    class BuildingRepository
+    {
+    public:
+        void StoreAll(Serializer *serializer);
+    };
 }
 
 
