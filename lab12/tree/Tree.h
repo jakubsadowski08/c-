@@ -19,6 +19,7 @@ namespace tree
         bool Find(const Element &e);
         size_t Depth();
         size_t Size();
+        Tree<Element> Root();
         Element Value();
         std::unique_ptr<Tree> left;
         std::unique_ptr<Tree> right;
@@ -120,6 +121,11 @@ namespace tree
     template<class Element>
     size_t Tree<Element>::Size() {
         return sized;
+    }
+
+    template<class Element>
+    Tree<Element> Tree<Element>::Root() {
+        return *this;
     }
 
 
